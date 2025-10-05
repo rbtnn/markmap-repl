@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/d3@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.11/dist/browser/view.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.11/dist/browser/transform.min.js"></script>
+<style>
+body {
+  background-color: rgb(39 39 42);
+  color: rgb(255 255 255);
+  display: grid;
+  grid-template-rows: 98vh;
+  grid-template-columns: 49vw 49vw;
+}
+.textarea-container {
+  display: flex;
+  width: 49vw;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.textarea-container textarea {
+  flex: 1;
+  resize: none;
+  box-sizing: border-box;
+  font-family: monospace;
+  font-size: 24px;
+  padding: 10px;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border: none;
+  outline: none; 
+}
+
+.svg-container {
+  display: flex;
+  width: 49vw;
+  grid-row: 1;
+  grid-column: 2;
+}
+
+svg {
+  flex: 1;
+  resize: none;
+  box-sizing: border-box;
+}
+</style>
+  </head>
+  <body>
+    <div class="textarea-container">
+      <textarea id="md">
+# foobar
+
+## foo
+
+- f
+- o
+- o
+
+## bar
+
+- b
+- a
+- r
+      </textarea>
+    </div>
+    <div class="svg-container">
+      <svg id="mindmap"></svg>
+    <div>
+    <script>
+      const STORAGE_KEY = "markmap-md";
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const text = document.getElementById('md');
+      const svg = document.getElementById('mindmap');
+      if (saved) {
+        text.value = saved;
+      }
+      let mm = null;
+      function render() {
+        const data = markmap.transform(text.value);
+        if (!mm) {
+          mm = markmap.Markmap.create(svg, null, data);
+        } else {
+          mm.setData(data);
+          mm.fit();
+        }
+        localStorage.setItem(STORAGE_KEY, text.value);
+      }
+      text.addEventListener('input', render);
+      render();
+    </script>
+  </body>
+</html>
