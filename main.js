@@ -3,6 +3,8 @@ const text = document.getElementById('md');
 const svg = document.getElementById('mindmap');
 const tabsEl = document.getElementById('tabs');
 const addBtn = document.getElementById('addTab');
+const toggleBtn = document.getElementById('circle');
+const container = document.getElementById('container');
 
 let mm = null;
 let currentTab = null;
@@ -162,6 +164,17 @@ text.addEventListener('input', render);
 addBtn.addEventListener('click', () => {
     const name = prompt("新しいタブの名前を入力:", "New Tab");
     if (name) createTab(name);
+});
+
+toggleBtn.addEventListener('click', () => {
+    if (container.classList.contains('vertical')) {
+        container.classList.remove('vertical');
+        container.classList.add('horizontal');
+    } else {
+        container.classList.remove('horizontal');
+        container.classList.add('vertical');
+    }
+    mm.fit();
 });
 
 init();

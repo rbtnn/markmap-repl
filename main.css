@@ -2,17 +2,59 @@ body {
   background-color: rgb(39 39 42);
   color: rgb(255 255 255);
   display: grid;
-  grid-template-rows: 50px calc(98vh - 50px);
-  grid-template-columns: 50vw 50vw;
   margin: 0;
 }
 
+body.horizontal {
+  grid-template-rows: 50px calc(100vh - 50px);
+  grid-template-columns: 50vw 50vw;
+}
+
+body.vertical {
+  grid-template-rows: 50px calc((100vh - 50px) / 2) calc((100vh - 50px) / 2);
+  grid-template-columns: 100vw;
+}
+
+.circle {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #eee;
+  position: fixed;
+  cursor: pointer;
+  border-radius: 50%;
+  background: conic-gradient(
+    #3b82f6 0deg 90deg,
+    #60a5fa 90deg 180deg,
+    #93c5fd 180deg 270deg,
+    #bfdbfe 270deg 360deg
+  );
+}
+
+.horizontal .circle {
+  top: calc(50px + (100vh - 50px - 30px) / 2);
+  left: calc((100vw - 30px) / 2);
+}
+
+.vertical .circle {
+  top: calc(50px + (100vh - 50px - 30px) / 2);
+  left: calc((100vw - 30px) / 2);
+}
+
 .tabs {
-  grid-column: 1 / span 2;
-  grid-row: 1;
   display: flex;
   background: #2e2e2e;
   align-items: center;
+}
+
+.horizontal .tabs {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+.vertical .tabs {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .tab {
@@ -52,7 +94,10 @@ body {
 
 .textarea-container {
   display: flex;
-  width: 49vw;
+}
+
+.horizontal .textarea-container {
+  width: 50vw;
   grid-row: 2;
   grid-column: 1;
 }
@@ -72,9 +117,18 @@ body {
 
 .svg-container {
   display: flex;
-  width: 49vw;
+}
+
+.horizontal .svg-container {
+  width: 50vw;
   grid-row: 2;
   grid-column: 2;
+}
+
+.vertical .svg-container {
+  width: 100vw;
+  grid-row: 2;
+  grid-column: 1;
 }
 
 svg {
